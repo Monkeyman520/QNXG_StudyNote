@@ -19,22 +19,14 @@ git bash here
 $ git init
 ```
 
-
-
 ### 添加文件
-
-
 
 ```git
 $ git add <filename>
 $ git add --all  //添加目录下的所有文件
 ```
 
-
-
 ### 提交文件
-
-
 
 ```git
 $ git commit -m "message"
@@ -64,6 +56,7 @@ $ git log
 
 * git log 会按提交时间列出所有的更新，最近的更新排在最上面。每次更新都有一个 SHA-1 校验和、作者的名字 和 电子邮件地址、提交时间，最后缩进一个段落显示提交说明。
 * 简化输出参数  --pretty=oneline
+* `log -1`表示最后一次提交
 * [git log的详细操作](https://www.jianshu.com/p/0805b5d5d893)。
 
 #### 回退操作
@@ -320,3 +313,184 @@ $ git cherry-pick <commit>
 ```git
 $ git branch -D <name>
 ```
+
+### 多人协作
+
+当你从远程仓库克隆时，实际上Git自动把本地的`master`分支和远程的`master`分支对应起来了，并且，远程仓库的默认名称是`origin`。
+
+#### 查看远程库的信息
+
+`$ git remote`
+`$ git remote -v  //显示更详细的信息 显示了可以抓取和推送的`origin`的地址。如果没有推送权限，就看不到push的地址`
+
+#### 推送分支
+
+```git
+$ git push origin <branch-name>
+```
+
+但是，并不是一定要把本地分支往远程推送:
+
+- `master`分支是主分支，因此要时刻与远程同步；
+- `dev`分支是开发分支，团队所有成员都需要在上面工作，所以也需要与远程同步；
+- bug分支只用于在本地修复bug，就没必要推到远程了，除非老板要看看你每周到底修复了几个bug；
+- feature分支是否推到远程，取决于你是否和你的小伙伴合作在上面开发。
+
+#### 抓取分支
+
+从远程库clone时，默认情况下，只能看到本地的`master`分支，可以用`git branch`命令查看。
+
+要在`dev`分支上开发，就必须创建远程`origin`的`dev`分支到本地；
+
+```git
+$ git checkout -b dev origin/dev  //创建dev分支并且与远程库的dev分支关联起来
+```
+
+修改完进行提交推送时发生冲突，先用`git pull`把最新的提交从`origin/dev`抓下来，然后，在本地合并，解决冲突，再推送。
+
+* 需要指定本地分支与远程`origin`分支的链接，否则容易`pull`错误 (`no tracking information`)
+
+* ```git
+  $ git branch --set-upstream-to <branch-name> origin/<branch-name>
+  ```
+
+##### git fetch / git pull
+
+`git fetch`是将远程主机的最新内容拉到本地，便于进行自动合并工作本机分支中。
+
+`git pull` 则是将远程主机的最新内容拉下来后直接合并，即：`git pull = git fetch + git merge`，这样可能会产生冲突，需要手动解决。
+
+* 相对来说 git fetch更安全一点
+* 详情参见 [git fetch / git pull详解](https://www.cnblogs.com/runnerjack/p/9342362.html)
+
+### Rebase
+
+多人在同一个分支上协作时，很容易出现冲突。即使没有冲突，后push的童鞋不得不先pull，在本地合并，然后才能push成功。
+
+```git
+$ git rebase
+```
+
+- rebase操作可以把本地未push的分叉提交历史整理成直线，缺点是本地的分叉提交已经被修改。
+- rebase的目的是使得我们在查看历史提交的变化时更容易，因为分叉的提交需要三方对比。
+
+## 标签管理
+
+Git的标签虽然是版本库的快照，但其实它就是指向某个commit的指针（跟分支很像对不对？但是分支可以移动，标签不能移动），所以，创建和删除标签都是瞬间完成的。
+
+### 创建标签
+
+```git
+$ git tag <name> commit_id
+```
+
+* 创建一个新标签
+* 默认标签是打在最新提交的commit上的，如果忘了打标签，找到历史提交的commit id，然后打上就可以了
+
+```git
+$ git tag
+```
+
+* 查看所有标签
+
+```git
+$ git show <tagname>
+```
+
+* 查看标签信息
+
+```git
+$ git tag -a <tagname> -m "message" commit_id
+```
+
+* 创建带有说明的标签，用`-a`指定标签名，`-m`指定说明文字
+
+**标签总是和某个commit挂钩。如果这个commit既出现在master分支，又出现在dev分支，那么在这两个分支上都可以看到这个标签。**
+
+### 操作标签
+
+1. 删除标签
+
+```git
+$ git tag -d <tagname>
+```
+
+* **因为创建的标签都只存储在本地，不会自动推送到远程。所以，打错的标签可以在本地安全删除。**
+
+2. 推送标签到远程
+
+```git
+$ git push origin <tagname>
+```
+
+3. 一次性推送全部尚未推送到远程的本地标签
+
+```git
+$ git push origin --tags
+```
+
+4. 删除远程的标签
+
+* 先从本地删除
+
+```git
+$ git tag -d <tagname>
+```
+
+* 从远程删除
+
+```git
+$ git push origin :refs/tags/<tagname>
+```
+
+## Git配置
+
+* git显色明显
+
+```git
+$ git config --global color.ui true
+```
+
+### 忽略文件配置
+
+在Git工作区的根目录下创建一个特殊的`.gitignore`文件，然后把要忽略的文件名填进去，Git就会自动忽略这些文件。
+
+* 被`.gitignore`忽略的文件的强行添加
+
+```git
+$ git add -f <filename>  // -f = --force  表示强制完成
+```
+
+* `.gitignore`书写错误的检查
+
+```git
+$ git check-ignore -v <filename>
+```
+
+Git会告诉我们，`.gitignore`的第几行规则忽略了该文件
+
+- 忽略某些文件时，需要编写`.gitignore`；
+- `.gitignore`文件本身要放到版本库里，并且可以对`.gitignore`做版本管理！
+- 其他`.gitignore`的配置，详情请参见 [GitHub`.gitignore`配置](https://github.com/github/gitignore)
+
+### 配置别名
+
+例如 `st`就表示`status`
+
+```git
+$ git config --global alias.st status  // alias 表示别名
+```
+
+用`co`表示`checkout`，`ci`表示`commit`，`br`表示`branch`：
+
+```git
+$ git config --global alias.co checkout
+$ git config --global alias.ci commit
+$ git config --global alias.br branch
+```
+
+* `--global`参数是全局参数，也就是这些命令在这台电脑的所有Git仓库下都有用。
+
+## 其余操作、知识
+
+本文均来自于[廖雪峰Git教程](https://www.liaoxuefeng.com/wiki/896043488029600)。
