@@ -474,3 +474,360 @@ HTML 表单用于收集不同类型的用户输入。
 表单元素是允许用户在表单中输入内容,比如：文本域(`textarea`)、下拉列表、单选框(radio-buttons)、复选框(`checkboxes`)等等。
 
 表单使用表单标签` <form>` 来设置
+
+### 输入元素
+
+多数情况下被用到的表单标签是输入标签（`<input>`）输入类型是由类型属性（type）定义的。
+
+#### 文本域
+
+文本域通过`<input type="text">` 标签来设定，可以在表单中键入字母、数字等内容
+
+```
+<form>
+First name: <input type="text" name="firstname"><br>
+Last name: <input type="text" name="lastname">
+</form>
+```
+
+* 表单本身并不可见，文本域的默认宽度是 20 个字符。
+
+#### 密码
+
+密码字段通过标签`<input type="password">` 来定义
+
+```
+<form>
+Password: <input type="password" name="pwd">
+</form>
+```
+
+* 密码字段字符不会明文显示，而是以星号或圆点替代。
+
+#### 单选按钮（Radio Buttons）
+
+`<input type="radio">` 标签定义了表单单选框选项
+
+单选按钮可以设置以下几个属性：value、name、checked
+
+-  value：提交数据到服务器的值（后台程序`PHP`使用）
+-  name：为控件命名，以备后台程序 ASP、`PHP` 使用
+-  checked：当设置 checked="checked" 时，该选项被默认选中
+
+```
+<form>
+<input type="radio" name="sex" value="male">Male<br>
+<input type="radio" name="sex" value="female">Female
+</form>
+```
+
+`<input type="reset">`定义重置按钮
+
+`<input type="reset" name="button" id="button" value="重置">`
+
+点击之后会将重置按钮所在的表单中填写的内容重新设置为默认值。
+
+#### 复选框（Check boxes）
+
+`<input type="checkbox">` 定义了复选框. 用户需要从若干给定的选择中选取一个或若干选项。
+
+```
+<form>
+<input type="checkbox" name="vehicle" value="Bike">I have a bike<br>
+<input type="checkbox" name="vehicle" value="Car">I have a car
+</form>
+```
+
+#### 提交按钮(Submit Button)
+
+`<input type="submit"> `定义了提交按钮.
+
+当用户单击确认按钮时，表单的内容会被传送到另一个文件。表单的动作属性定义了目的文件的文件名。由动作属性定义的这个文件通常会对接收到的输入数据进行相关的处理。
+
+```
+<form name="input" action="html_form_action.php" method="get">
+Username: <input type="text" name="user">
+<input type="submit" value="Submit">
+</form>
+```
+
+* 假如您在上面的文本框内键入几个字母，然后点击确认按钮，那么输入数据会传送到 `"html_form_action.php" `的页面。该页面将显示出输入的结果。
+
+## 框架
+
+在同一个浏览器窗口中显示不止一个页面。
+
+* `iframe` 语法
+
+  * ```
+    <iframe src="URL"></iframe>
+    该URL指向不同的网页。
+    ```
+
+* height 和 width 属性用来定义`iframe`标签的高度与宽度。
+
+  属性默认以像素为单位, 但是你可以指定其按比例显示 (如："80%")。
+
+* `frameborder` 属性用于定义`iframe`表示是否显示边框。设置属性值为 "0" 移除`iframe`的边框
+
+* `iframe`可以显示一个目标链接的页面，目标链接的属性必须使用`iframe`的属性
+
+## 颜色
+
+* HTML 颜色由红色、绿色、蓝色混合而成。
+* HTML 颜色由一个十六进制符号来定义，这个符号由红色、绿色和蓝色的值组成（`RGB`）。每种颜色的最小值是0（十六进制：#00）。最大值是255（十六进制：#FF）。
+  * `rgb(red,green,blue)`是一个有序数对，整体显示的颜色是由着三种颜色合成的颜色，数字大小表示组成成分的多少,每个数字都是十六进制。
+
+* `RGBA` 的意思是（Red-Green-Blue-Alpha）它是在` RGB` 上扩展包括了 **“alpha”** 通道，运行对颜色值设置透明度。可以实现设置颜色透明度的功能，0表示全透明。
+
+* <a herf="https://www.runoob.com/html/html-colornames.html">颜色名</a>
+
+## 脚本
+
+JavaScript 使 HTML 页面具有更强的动态和交互性。
+
+### ` <script>`
+
+* `<script>` 标签用于定义客户端脚本，比如 JavaScript.
+
+* `<script>`元素既可包含脚本语句，也可通过` src `属性指向外部脚本文件。
+
+* JavaScript 最常用于图片操作、表单验证以及内容动态更新。
+
+### `<noscript>`
+
+* `<noscript>` 标签提供无法使用脚本时的替代内容，比方在浏览器禁用脚本时，或浏览器不支持客户端脚本时。
+
+* `<noscript>`元素可包含普通 HTML 页面的 body 元素中能够找到的所有元素。
+
+* 只有在浏览器不支持脚本或者禁用脚本时，才会显示` <noscript>` 元素中的内容
+
+## 字符实体
+
+HTML 中的预留字符必须被替换为字符实体。一些在键盘上找不到的字符也可以使用字符实体来替换。
+
+### HTML 实体
+
+在 HTML 中，某些字符是预留的。在 HTML 中不能使用小于号（<）和大于号（>），如需显示小于号，则必须这样写：**<** 或 **<** 或 **<**，这是因为浏览器会误认为它们是标签。如果希望正确地显示预留字符，我们必须在 HTML 源代码中使用字符实体（character entities）。
+
+*  使用实体名而不是数字的好处是，名称易于记忆。不过坏处是，浏览器也许并不支持所有实体名称（对实体数字的支持却很好）
+
+#### 不间断空格(Non-breaking Space)
+
+HTML 中的常用字符实体是不间断空格(`&nbsp;`)。
+
+浏览器总是会截短 HTML 页面中的空格。如果您在文本中写 10 个空格，在显示该页面之前，浏览器会删除它们中的 9 个。如需在页面中增加空格的数量，您需要使用 `&nbsp; `字符实体。
+
+#### 音标符
+
+发音符号是加到字母上的一个"glyph(字形)"。一些变音符号, 如 尖音符 ( ̀) 和 抑音符 ( ́) 。变音符号可以出现字母的上面和下面，或者字母里面，或者两个字母间。变音符号可以与字母、数字字符的组合来使用。
+
+| 音标符 | 字符 | Construct | 输出结果 |
+| :----- | :--- | :-------- | :------: |
+| ̀       | a    | `a&#768;` |    à     |
+| ́       | a    | `a&#769;` |    á     |
+
+* **虽然 `html `不区分大小写，但实体字符对大小写敏感。**
+* <a herf="https://www.runoob.com/tags/ref-entities.html">HTML实体参考手册</a>
+
+## HTML 统一资源定位器(`Uniform Resource Locators`)
+
+URL 是一个网页地址。URL可以由字母组成，如`"runoob.com"`，或互联网协议（`IP`）地址： 192.68.20.50。大多数人进入网站使用网站域名来访问，因为 名字比数字更容易记住。
+
+### URL - 统一资源定位器
+
+Web浏览器通过URL从Web服务器请求页面。一个统一资源定位器(URL) 用于定位万维网上的文档。
+
+一个网页地址实例: http://www.runoob.com/html/html-tutorial.html 语法规则:
+
+**`scheme`://`host.domain`:`port`/`path`/`filename`**
+
+说明:
+
+- - scheme - 定义因特网服务的类型。最常见的类型是` http`
+  - host - 定义域主机（`http` 的默认主机是 `www`）
+  - domain - 定义因特网域名，比如 `runoob.com`
+  - :port - 定义主机上的端口号（`http` 的默认端口号是 80）
+  - path - 定义服务器上的路径（如果省略，则文档必须位于网站的根目录中）。
+  - filename - 定义文档/资源的名称
+
+### URL Scheme
+
+| Scheme  | 访问               | 用于...                               |
+| :------ | :----------------- | :------------------------------------ |
+| `http`  | 超文本传输协议     | 以` http://` 开头的普通网页。不加密。 |
+| `https` | 安全超文本传输协议 | 安全网页，加密所有信息交换。          |
+| `ftp`   | 文件传输协议       | 用于将文件下载或上传至网站。          |
+| file    |                    | 您计算机上的文件。                    |
+
+### URL 字符编码
+
+* URL 只能使用 [ASCII 字符集](https://www.runoob.com/tags/html-ascii.html).
+
+* 来通过因特网进行发送。由于 URL 常常会包含 ASCII 集合之外的字符，URL 必须转换为有效的 ASCII 格式。
+
+* URL 编码使用 "%" 其后跟随两位的十六进制数来替换非 ASCII 字符。
+
+* URL 不能包含空格。URL 编码通常使用 + 来替换空格。
+
+ [URL 编码参考手册](https://www.runoob.com/tags/html-urlencode.html)
+
+## [速查列表](https://www.runoob.com/html/html-quicklist.html)
+
+### HTML 基本文档
+
+```
+<!DOCTYPE html>
+<html>
+<head>
+<title>文档标题</title>
+</head>
+<body>
+可见文本...
+</body>
+</html>
+```
+
+### 基本标签（Basic Tags）
+
+```
+<h1>最大的标题</h1>
+<h2> . . . </h2>
+<h3> . . . </h3>
+<h4> . . . </h4>
+<h5> . . . </h5>
+<h6>最小的标题</h6>
+<p>这是一个段落。</p>
+<br> （换行）
+<hr> （水平线）
+<!-- 这是注释 -->
+```
+
+### 文本格式化（Formatting）
+
+```
+<b>粗体文本</b>
+<code>计算机代码</code>
+<em>强调文本</em>
+<i>斜体文本</i>
+<kbd>键盘输入</kbd> 
+<pre>预格式化文本</pre>
+<small>更小的文本</small>
+<strong>重要的文本</strong>
+ 
+<abbr> （缩写）
+<address> （联系信息）
+<bdo> （文字方向）
+<blockquote> （从另一个源引用的部分）
+<cite> （工作的名称）
+<del> （删除的文本）
+<ins> （插入的文本）
+<sub> （下标文本）
+<sup> （上标文本）
+```
+
+### 链接（Links）
+
+```
+普通的链接：<a href="http://www.example.com/">链接文本</a>
+图像链接： <a href="http://www.example.com/"><img src="URL" alt="替换文本"></a>
+邮件链接： <a href="mailto:webmaster@example.com">发送e-mail</a>
+书签：
+<a id="tips">提示部分</a>
+<a href="#tips">跳到提示部分</a>
+```
+
+### 图片（Images）
+
+`<img src="URL" alt="替换文本" height="42" width="42">`
+
+### 样式/区块（Styles/Sections）
+
+```
+<style type="text/css">
+h1 {color:red;}
+p {color:blue;}
+</style>
+<div>文档中的块级元素</div>
+<span>文档中的内联元素</span>
+```
+
+### 无序列表
+
+```
+<ul>
+  <li>项目</li>
+  <li>项目</li>
+</ul>
+```
+
+### 有序列表
+
+```
+<ol>
+  <li>第一项</li>
+  <li>第二项</li>
+</ol>
+```
+
+### 定义列表
+
+```
+<dl>
+ <dt>项目 1</dt>
+  <dd>描述项目 1</dd>
+ <dt>项目 2</dt>
+  <dd>描述项目 2</dd>
+</dl>
+```
+
+### 表格（Tables）
+
+```
+<table border="1">
+ <tr>
+  <th>表格标题</th>
+  <th>表格标题</th>
+ </tr>
+ <tr>
+  <td>表格数据</td>
+  <td>表格数据</td>
+ </tr>
+</table>
+```
+
+### 框架（`Iframe`）
+
+```
+<iframe src="demo_iframe.htm"></iframe>
+```
+
+### 表单（Forms）
+
+```
+<form action="demo_form.php" method="post/get">
+<input type="text" name="email" size="40" maxlength="50">
+<input type="password">
+<input type="checkbox" checked="checked">
+<input type="radio" checked="checked">
+<input type="submit" value="Send">
+<input type="reset">
+<input type="hidden">
+<select>
+<option>苹果</option>
+<option selected="selected">香蕉</option>
+<option>樱桃</option>
+</select>
+<textarea name="comment" rows="60" cols="20"></textarea>
+
+</form>
+```
+
+### 实体（Entities）
+
+`&lt;` 等同于 <
+
+`&gt`; 等同于 >
+
+`&#169;` 等同于 ©
+
