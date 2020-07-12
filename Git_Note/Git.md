@@ -150,6 +150,10 @@ $ git push -u origin master
   $ git push origin master //之后的
   ```
 
+* 删除远程仓库
+
+  `$ git remote rm origin`  //或者在gitconfg内删除[temote "origin"] 内容
+
 #### 远程克隆
 
 ```git
