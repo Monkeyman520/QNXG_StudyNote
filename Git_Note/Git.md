@@ -498,3 +498,9 @@ $ git config --global alias.br branch
 ## 其余操作、知识
 
 本文均来自于[廖雪峰Git教程](https://www.liaoxuefeng.com/wiki/896043488029600)。
+
+
+
+
+
+最近发现git更新了许多东西，详情参见官方文档。
